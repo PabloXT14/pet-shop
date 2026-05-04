@@ -1,0 +1,6 @@
+allowBuilds:
+  '@prisma/engines': true
+  lefthook: true
+  prisma: true
+  sharp: true
+  shadcn: true
