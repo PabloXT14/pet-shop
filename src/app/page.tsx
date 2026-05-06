@@ -1,9 +1,8 @@
-export default function Home() {
-  return (
-    <div>
-      <h2>Hello, World!</h2>
+import { HomeView } from "@/screens/home/home-view"
+import { useHomeViewModel } from "@/screens/home/use-home-view-model"
 
-      <p>This is a Next.js app.</p>
-    </div>
-  )
+export default function Home() {
+  const props = useHomeViewModel()
+
+  return <HomeView {...props} />
 }
