@@ -8,7 +8,7 @@
   --color-content-brand: #9282fa;
 
   /* Background Colors */
-  --color-background-primary: #151515;
+  --color-background-primary: #14151d;
   --color-background-secondary: #1e1e1e;
   --color-background-tertiary: #23242c;
   --color-background-brand: #9282fa;
@@ -17,6 +17,7 @@
   /* Border Colors */
   --color-border-primary: #3e3c41;
   --color-border-secondary: #86818c;
+  --color-border-tertiary: #2e2c30;
   --color-border-brand: #9282fa;
   --color-border-divisor: #353339;
 
@@ -29,6 +30,7 @@
   --color-accent-yellow-light: #75601b;
   --color-accent-orange: #f09102;
   --color-accent-orange-light: #75501b;
+  --color-destructive: #dc2626;
 
   /* Typography */
   --font-family-body: "Inter", sans-serif;
@@ -81,7 +83,7 @@
   --muted-foreground: var(--color-content-secondary);
   --accent: var(--color-accent-yellow);
   --accent-foreground: var(--color-content-primary);
-  --destructive: #dc2626;
+  --destructive: var(--color-destructive);
   --destructive-foreground: #ffffff;
   --border: var(--color-border-primary);
   --input: var(--color-border-primary);
@@ -116,129 +118,60 @@
 }
 
 /* Typography Utilities Classes */
-@layer utilities {
-  .text-title {
-    font-family: var(--font-inter-tight), sans-serif;
-    font-size: var(--text-title-size);
-    line-height: var(--text-title-line-height);
-    font-weight: var(--text-title-weight);
-  }
+@utility text-title {
+  font-family: var(--font-inter-tight), sans-serif;
+  font-size: var(--text-title-size);
+  line-height: var(--text-title-line-height);
+  font-weight: var(--text-title-weight);
+}
 
-  .text-title-modal {
-    font-family: var(--font-family-title);
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 1.2;
-  }
+@utility text-title-modal {
+  font-family: var(--font-family-title);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+}
 
-  .text-paragraph-medium {
-    font-family: var(--font-inter), sans-serif;
-    font-size: var(--text-paragraph-medium-size);
-    line-height: var(--text-paragraph-medium-line-height);
-    font-weight: var(--text-paragraph-medium-weight);
-  }
+@utility text-paragraph-medium {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-paragraph-medium-size);
+  line-height: var(--text-paragraph-medium-line-height);
+  font-weight: var(--text-paragraph-medium-weight);
+}
 
-  .text-paragraph-small {
-    font-family: var(--font-inter), sans-serif;
-    font-size: var(--text-paragraph-small-size);
-    line-height: var(--text-paragraph-small-line-height);
-    font-weight: var(--text-paragraph-small-weight);
-  }
+@utility text-paragraph-small {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-paragraph-small-size);
+  line-height: var(--text-paragraph-small-line-height);
+  font-weight: var(--text-paragraph-small-weight);
+}
 
-  .text-label-large {
-    font-family: var(--font-inter), sans-serif;
-    font-size: var(--text-label-large-size);
-    line-height: var(--text-label-large-line-height);
-    font-weight: var(--text-label-large-weight);
-  }
+@utility text-label-large {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-label-large-size);
+  line-height: var(--text-label-large-line-height);
+  font-weight: var(--text-label-large-weight);
+}
 
-  .text-label-medium {
-    font-family: var(--font-inter), sans-serif;
-    font-size: var(--text-label-medium-size);
-    line-height: var(--text-label-medium-line-height);
-    font-weight: var(--text-label-medium-weight);
-  }
+@utility text-label-medium {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-label-medium-size);
+  line-height: var(--text-label-medium-line-height);
+  font-weight: var(--text-label-medium-weight);
+}
 
-  .text-label-small {
-    font-family: var(--font-inter), sans-serif;
-    font-size: var(--text-label-small-size);
-    line-height: var(--text-label-small-line-height);
-    font-weight: var(--text-label-small-weight);
-  }
+@utility text-label-small {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-label-small-size);
+  line-height: var(--text-label-small-line-height);
+  font-weight: var(--text-label-small-weight);
+}
 
-  .text-link {
-    font-family: var(--font-inter), sans-serif;
-    font-size: var(--text-link-size);
-    line-height: var(--text-link-line-height);
-    font-weight: var(--text-link-weight);
-  }
-
-  /* Color Utilities */
-  .text-content-primary {
-    color: var(--color-content-primary);
-  }
-  .text-content-secondary {
-    color: var(--color-content-secondary);
-  }
-  .text-content-tertiary {
-    color: var(--color-content-tertiary);
-  }
-  .text-content-brand {
-    color: var(--color-content-brand);
-  }
-
-  .text-destructive {
-    color: #dc2626;
-  }
-
-  .bg-background-primary {
-    background-color: var(--color-background-primary);
-  }
-  .bg-background-secondary {
-    background-color: var(--color-background-secondary);
-  }
-  .bg-background-tertiary {
-    background-color: var(--color-background-tertiary);
-  }
-  .bg-background-brand {
-    background-color: var(--color-background-brand);
-  }
-  .bg-background-highlights {
-    background-color: var(--color-background-highlights);
-  }
-
-  .border-border-primary {
-    border-color: var(--color-border-primary);
-  }
-  .border-border-secondary {
-    border-color: var(--color-border-secondary);
-  }
-  .border-border-brand {
-    border-color: var(--color-border-brand);
-  }
-  .border-border-divisor {
-    border-color: var(--color-border-divisor);
-  }
-
-  /* Accent Background Colors */
-  .bg-accent-blue {
-    background-color: var(--color-accent-blue);
-  }
-  .bg-accent-blue-light {
-    background-color: var(--color-accent-blue-light);
-  }
-  .bg-accent-yellow {
-    background-color: var(--color-accent-yellow);
-  }
-  .bg-accent-yellow-light {
-    background-color: var(--color-accent-yellow-light);
-  }
-  .bg-accent-orange {
-    background-color: var(--color-accent-orange);
-  }
-  .bg-accent-orange-light {
-    background-color: var(--color-accent-orange-light);
-  }
+@utility text-link {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--text-link-size);
+  line-height: var(--text-link-line-height);
+  font-weight: var(--text-link-weight);
 }
 
 /* Toast Error Styles */

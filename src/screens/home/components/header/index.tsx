@@ -10,7 +10,7 @@ export const Header = () => {
       </div>
 
       {/* CALENDAR */}
-      <div className="h-12 w-full max-w-[172] rounded-lg bg-background-secondary"></div>
+      <div className="h-12 w-full max-w-[172] rounded-lg bg-background-tertiary"></div>
     </header>
   )
 }
