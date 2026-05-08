@@ -36,6 +36,12 @@ export const PeriodSection = ({ groupedAppointment }: PeriodSectionProps) => {
 
       {/* CLIENTS */}
       <div className="flex flex-col gap-0.5 p-5">
+        {groupedAppointment.appointments.length === 0 && (
+          <p className="w-full p-3 text-center text-content-secondary text-paragraph-small">
+            Sem agendamentos para este período
+          </p>
+        )}
+
         {groupedAppointment.appointments.map((appointment) => (
           <div
             key={appointment.id}
