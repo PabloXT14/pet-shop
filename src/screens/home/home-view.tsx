@@ -5,7 +5,7 @@ import type { useHomeViewModel } from "./use-home-view-model"
 
 type HomeViewProps = ReturnType<typeof useHomeViewModel>
 
-export const HomeView = ({ appointments }: HomeViewProps) => {
+export const HomeView = ({ groupedAppointments }: HomeViewProps) => {
   return (
     <div className="min-h-screen bg-background-primary">
       {/* CONTENT */}
@@ -14,12 +14,12 @@ export const HomeView = ({ appointments }: HomeViewProps) => {
 
         {/* PERIODS */}
         <div className="flex flex-col gap-3">
-          {/* MORNING */}
-          <PeriodSection appointments={appointments} periodType="morning" />
-          {/* AFTERNOON */}
-          <PeriodSection appointments={appointments} periodType="afternoon" />
-          {/* EVENING */}
-          <PeriodSection appointments={appointments} periodType="evening" />
+          {groupedAppointments.map((groupedAppointment) => (
+            <PeriodSection
+              key={groupedAppointment.type}
+              groupedAppointment={groupedAppointment}
+            />
+          ))}
         </div>
       </div>
     </div>

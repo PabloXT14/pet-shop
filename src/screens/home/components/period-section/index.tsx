@@ -1,21 +1,17 @@
+import type { JSX } from "react"
 import dayjs from "dayjs"
 import { CloudSun2, MoonStars, SunFog } from "@solar-icons/react/ssr"
 
-type Appointment = {
-  id: string
-  petName: string
-  description: string
-  tutorName: string
-  phone: string
-  scheduleAt: Date
-}
+import type {
+  AppointmentDayPeriod,
+  AppointmentPeriodGroup,
+} from "@/shared/types/appointment"
 
 type PeriodSectionProps = {
-  appointments: Appointment[]
-  periodType: "morning" | "afternoon" | "evening"
+  groupedAppointment: AppointmentPeriodGroup
 }
 
-const PERIOD_ICONS = {
+const PERIOD_ICONS: Record<AppointmentDayPeriod, JSX.Element> = {
   morning: <SunFog weight="Bold" size={24} className="text-accent-blue" />,
   afternoon: (
     <CloudSun2 weight="Bold" size={24} className="text-accent-orange" />
@@ -23,23 +19,24 @@ const PERIOD_ICONS = {
   evening: <MoonStars weight="Bold" size={24} className="text-accent-yellow" />,
 }
 
-export const PeriodSection = ({
-  appointments,
-  periodType = "morning",
-}: PeriodSectionProps) => {
+export const PeriodSection = ({ groupedAppointment }: PeriodSectionProps) => {
   return (
     <section className="w-full rounded-[10px] bg-background-tertiary">
       <header className="flex items-center gap-3 border-border-tertiary border-b px-5 py-3">
-        {PERIOD_ICONS[periodType]}
+        {PERIOD_ICONS[groupedAppointment.type]}
 
-        <h2 className="flex-1 text-content-primary text-label-large">Manhã</h2>
+        <h2 className="flex-1 text-content-primary text-label-large">
+          {groupedAppointment.title}
+        </h2>
 
-        <p className="text-content-secondary text-label-large">9h-12h</p>
+        <p className="text-content-secondary text-label-large">
+          {groupedAppointment.timeRange}
+        </p>
       </header>
 
       {/* CLIENTS */}
       <div className="flex flex-col gap-0.5 p-5">
-        {appointments.map((appointment) => (
+        {groupedAppointment.appointments.map((appointment) => (
           <div
             key={appointment.id}
             className="w-full not-last:border-border-divisor not-last:border-b"
