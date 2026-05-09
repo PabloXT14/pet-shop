@@ -8,8 +8,9 @@ const APPOINTMENTS: PrismaAppointment[] = [
   {
     id: "1",
     petName: "Rex",
-    description: "Banho e tosa",
-    tutorName: "João Silva",
+    description:
+      "Banho e tosa completo com hidratação e corte de unhas de gelo",
+    tutorName: "João Silva de Souza Junior da Silva",
     phone: "11987654321",
     scheduleAt: new Date("2024-06-01T10:00:00"),
   },

@@ -1,11 +1,12 @@
 import type { JSX } from "react"
-import dayjs from "dayjs"
 import { CloudSun2, MoonStars, SunFog } from "@solar-icons/react/ssr"
 
 import type {
   AppointmentDayPeriod,
   AppointmentPeriodGroup,
 } from "@/shared/types/appointment"
+
+import { AppointmentCard } from "../appointment-card"
 
 type PeriodSectionProps = {
   groupedAppointment: AppointmentPeriodGroup
@@ -43,66 +44,7 @@ export const PeriodSection = ({ groupedAppointment }: PeriodSectionProps) => {
         )}
 
         {groupedAppointment.appointments.map((appointment) => (
-          <div
-            key={appointment.id}
-            className="w-full not-last:border-border-divisor not-last:border-b"
-          >
-            {/* ON MOBILE */}
-            <div className="flex w-full flex-col items-end gap-2 p-3 md:hidden">
-              <div className="flex w-full flex-col">
-                <div className="flex w-full items-center gap-3">
-                  <h3 className="text-label-medium">
-                    {dayjs(appointment.scheduleAt).format("HH:mm")}
-                  </h3>
-
-                  <p className="text-content-primary text-label-small">
-                    {appointment.petName}
-                    <span className="text-content-secondary text-paragraph-small">
-                      {" "}
-                      / {appointment.tutorName}
-                    </span>
-                  </p>
-                </div>
-
-                <p className="text-content-secondary text-paragraph-small">
-                  {appointment.description}
-                </p>
-              </div>
-
-              <button
-                type="button"
-                className="text-content-tertiary text-paragraph-small"
-              >
-                Remover agendamento
-              </button>
-            </div>
-
-            {/* ON DESKTOP */}
-            <div className="hidden h-12 w-full items-center gap-4 px-3 md:flex">
-              <h3 className="text-label-medium">
-                {dayjs(appointment.scheduleAt).format("HH:mm")}
-              </h3>
-
-              <p className="flex-1 text-content-primary text-label-small">
-                {appointment.petName}
-                <span className="text-content-secondary text-paragraph-small">
-                  {" "}
-                  / {appointment.tutorName}
-                </span>
-              </p>
-
-              <p className="flex-1 text-content-secondary text-paragraph-small">
-                {appointment.description}
-              </p>
-
-              <button
-                type="button"
-                className="text-content-tertiary text-paragraph-small"
-              >
-                Remover agendamento
-              </button>
-            </div>
-          </div>
+          <AppointmentCard key={appointment.id} appointment={appointment} />
         ))}
       </div>
     </section>
