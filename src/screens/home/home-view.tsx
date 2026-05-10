@@ -14,7 +14,7 @@ export const HomeView = ({ groupedAppointments }: HomeViewProps) => {
 
         {/* PERIODS */}
         <div className="flex flex-col gap-3">
-          {groupedAppointments.map((groupedAppointment) => (
+          {groupedAppointments?.map((groupedAppointment) => (
             <PeriodSection
               key={groupedAppointment.type}
               groupedAppointment={groupedAppointment}
