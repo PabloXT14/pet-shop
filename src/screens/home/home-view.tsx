@@ -1,5 +1,6 @@
 import { Header } from "./components/header"
 import { PeriodSection } from "./components/period-section"
+import { AppointmentForm } from "./components/appointment-form"
 
 import type { useHomeViewModel } from "./use-home-view-model"
 
@@ -21,6 +22,11 @@ export const HomeView = ({ groupedAppointments }: HomeViewProps) => {
             />
           ))}
         </div>
+      </div>
+
+      {/* MODAL */}
+      <div className="fixed right-8 bottom-8">
+        <AppointmentForm />
       </div>
     </div>
   )
