@@ -25,7 +25,7 @@ export const HomeView = ({ groupedAppointments }: HomeViewProps) => {
       </div>
 
       {/* MODAL */}
-      <div className="fixed right-8 bottom-8">
+      <div className="flex items-center justify-center bg-background-tertiary p-5 md:fixed md:right-8 md:bottom-8 md:bg-transparent md:p-0">
         <AppointmentForm />
       </div>
     </div>
