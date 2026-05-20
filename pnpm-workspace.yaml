@@ -4,3 +4,4 @@ allowBuilds:
   prisma: true
   sharp: true
   shadcn: true
+  msw: true
