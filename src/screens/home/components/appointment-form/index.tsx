@@ -132,11 +132,12 @@ export const AppointmentForm = () => {
                   />
 
                   <Input
-                    {...field}
                     id={field.name}
                     aria-invalid={fieldState.invalid}
                     placeholder="(00) 00000-0000"
+                    mask="(00) 00000-0000"
                     className="pl-10"
+                    {...field}
                   />
                 </div>
 

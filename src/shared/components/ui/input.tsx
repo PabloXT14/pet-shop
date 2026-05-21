@@ -1,10 +1,13 @@
-import type * as React from "react"
+import type { ComponentProps } from "react"
+import { IMaskInput, type IMaskInputProps } from "react-imask"
 
 import { cn } from "@/shared/lib/utils"
 
-function Input({ className, type, ...props }: React.ComponentProps<"input">) {
+type InputProps = ComponentProps<"input"> & IMaskInputProps<HTMLInputElement>
+
+function Input({ className, type, ...props }: InputProps) {
   return (
-    <input
+    <IMaskInput
       type={type}
       data-slot="input"
       className={cn(

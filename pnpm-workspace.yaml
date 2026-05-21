@@ -5,3 +5,4 @@ allowBuilds:
   sharp: true
   shadcn: true
   msw: true
+  core-js-pure: true
