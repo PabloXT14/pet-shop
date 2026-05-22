@@ -3,7 +3,9 @@ services:
   postgres:
     image: postgres:17
     container_name: petshop-db
-    restart: always
+
+    restart: unless-stopped
+
     ports:
       - "5432:5432"
     environment:
@@ -11,7 +13,7 @@ services:
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: petshop
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
 
 volumes:
   pgdata:
