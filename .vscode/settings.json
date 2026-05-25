@@ -31,5 +31,5 @@
     "source.fixAll.biome": "explicit"
   },
   "js/ts.tsdk.path": "node_modules/typescript/lib",
-  "tailwindCSS.classFunctions": ["cva", "cx", "tv", "clsx", "twMerge"]
+  "tailwindCSS.classFunctions": ["cva", "cx", "tv", "clsx", "twMerge", "cn"]
 }

@@ -1,6 +1,13 @@
 import type { Metadata } from "next"
 import { Inter, Inter_Tight } from "next/font/google"
 
+import dayjs from "dayjs"
+import "dayjs/locale/pt-br"
+import customParseFormat from "dayjs/plugin/customParseFormat"
+
+dayjs.extend(customParseFormat) // Permite que o dayjs reconheça formatos personalizados de data (ex: "DD/MM/YYYY HH:mm")
+dayjs.locale("pt-br") // Define o idioma para português do Brasil
+
 import "@/styles/globals.css"
 
 import { cn } from "@/shared/lib/utils"

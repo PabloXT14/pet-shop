@@ -2,6 +2,15 @@
 
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import {
+  AltArrowDown,
+  CalendarMinimalistic,
+  Paw,
+  Phone,
+  User,
+} from "@solar-icons/react/ssr"
+import dayjs from "dayjs"
+import { ptBR } from "date-fns/locale"
 
 import { Button } from "@/shared/components/ui/button"
 import {
@@ -12,12 +21,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/shared/components/ui/dialog"
+import { Field, FieldError, FieldLabel } from "@/shared/components/ui/field"
+import { Textarea } from "@/shared/components/ui/textarea"
+import { Input } from "@/shared/components/ui/input"
+import { Calendar } from "@/shared/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/shared/components/ui/popover"
 
 import { type AppointmentFormData, appointmentFormSchema } from "./schema"
-import { Field, FieldError, FieldLabel } from "@/shared/components/ui/field"
-import { Input } from "@/shared/components/ui/input"
-import { Paw, Phone, User } from "@solar-icons/react/ssr"
-import { Textarea } from "@/shared/components/ui/textarea"
 
 export const AppointmentForm = () => {
   const { handleSubmit, control, reset } = useForm({
@@ -27,6 +41,7 @@ export const AppointmentForm = () => {
       petName: "",
       phone: "",
       description: "",
+      scheduleAt: undefined,
     },
   })
 
@@ -74,11 +89,11 @@ export const AppointmentForm = () => {
                   />
 
                   <Input
-                    {...field}
                     id={field.name}
                     aria-invalid={fieldState.invalid}
                     placeholder="Digite o nome do tutor"
                     className="pl-10"
+                    {...field}
                   />
                 </div>
 
@@ -103,11 +118,11 @@ export const AppointmentForm = () => {
                   />
 
                   <Input
-                    {...field}
                     id={field.name}
                     aria-invalid={fieldState.invalid}
                     placeholder="Digite o nome do pet"
                     className="pl-10"
+                    {...field}
                   />
                 </div>
 
@@ -171,6 +186,77 @@ export const AppointmentForm = () => {
               </Field>
             )}
           />
+
+          {/* DATE AND TIME */}
+          <div className="flex w-full flex-col items-center gap-4 md:flex-row">
+            <Controller
+              control={control}
+              name="scheduleAt"
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>Data</FieldLabel>
+
+                  <Popover>
+                    <PopoverTrigger>
+                      <div className="relative">
+                        <CalendarMinimalistic
+                          weight="Bold"
+                          className="-translate-y-1/2 pointer-events-none absolute top-1/2 left-3 size-5 text-content-brand"
+                        />
+
+                        <Input
+                          id={field.name}
+                          aria-invalid={fieldState.invalid}
+                          placeholder="Selecione a data do atendimento"
+                          className="cursor-pointer pl-10"
+                          value={
+                            field.value
+                              ? dayjs(field.value).format("DD/MM/YYYY")
+                              : "Escolha a data"
+                          }
+                          readOnly
+                        />
+
+                        <AltArrowDown
+                          weight="Linear"
+                          className="-translate-y-1/2 pointer-events-none absolute top-1/2 right-3 size-5 text-content-primary"
+                        />
+                      </div>
+                    </PopoverTrigger>
+
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        locale={ptBR}
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date < dayjs().startOf("day").toDate()
+                        }
+                        captionLayout="dropdown"
+                        // formatters={{
+                        //   formatMonthDropdown: (date) => {
+                        //     return date
+                        //       .toLocaleString("pt-BR", {
+                        //         month: "short",
+                        //         year: "numeric",
+                        //       })
+                        //       .replace(".", "")
+                        //       .replace(/^\w/, (c) => c.toUpperCase())
+                        //       .slice(0, 4)
+                        //   },
+                        // }}
+                      />
+                    </PopoverContent>
+                  </Popover>
+
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+          </div>
         </form>
 
         <Button
