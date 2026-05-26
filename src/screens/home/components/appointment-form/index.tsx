@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import {
   AltArrowDown,
   CalendarMinimalistic,
+  ClockCircle,
   Paw,
   Phone,
   User,
@@ -30,8 +31,31 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/shared/components/ui/popover"
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+} from "@/shared/components/ui/select"
 
 import { type AppointmentFormData, appointmentFormSchema } from "./schema"
+
+const generateTimeOptions = () => {
+  const times = []
+
+  for (let hour = 9; hour <= 21; hour++) {
+    times.push(`${hour.toString().padStart(2, "0")}:00`)
+
+    if (hour === 21) break
+
+    times.push(`${hour.toString().padStart(2, "0")}:30`)
+  }
+
+  return times
+}
+
+const TIME_OPTIONS = generateTimeOptions()
 
 export const AppointmentForm = () => {
   const { handleSubmit, control, reset } = useForm({
@@ -41,7 +65,8 @@ export const AppointmentForm = () => {
       petName: "",
       phone: "",
       description: "",
-      scheduleAt: undefined,
+      date: undefined,
+      time: undefined,
     },
   })
 
@@ -191,7 +216,7 @@ export const AppointmentForm = () => {
           <div className="flex w-full flex-col items-center gap-4 md:flex-row">
             <Controller
               control={control}
-              name="scheduleAt"
+              name="date"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor={field.name}>Data</FieldLabel>
@@ -249,6 +274,49 @@ export const AppointmentForm = () => {
                       />
                     </PopoverContent>
                   </Popover>
+
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
+            <Controller
+              control={control}
+              name="time"
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>Horário</FieldLabel>
+
+                  <Select>
+                    <SelectTrigger>
+                      <div className="relative">
+                        <ClockCircle
+                          weight="Bold"
+                          className="-translate-y-1/2 pointer-events-none absolute top-1/2 left-3 size-5 text-content-brand"
+                        />
+
+                        <span className="cursor-pointer pl-10">
+                          {field.value ? field.value : "Escolha a hora"}
+                        </span>
+                      </div>
+                    </SelectTrigger>
+
+                    <SelectContent className="w-auto p-0" position="popper">
+                      <SelectGroup>
+                        {TIME_OPTIONS.map((time) => (
+                          <SelectItem
+                            key={time}
+                            value={time}
+                            onSelect={() => field.onChange(time)}
+                          >
+                            {time}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
 
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
