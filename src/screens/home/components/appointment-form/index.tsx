@@ -37,6 +37,7 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectValue,
 } from "@/shared/components/ui/select"
 
 import { type AppointmentFormData, appointmentFormSchema } from "./schema"
@@ -66,7 +67,7 @@ export const AppointmentForm = () => {
       phone: "",
       description: "",
       date: undefined,
-      time: undefined,
+      time: "",
     },
   })
 
@@ -213,7 +214,7 @@ export const AppointmentForm = () => {
           />
 
           {/* DATE AND TIME */}
-          <div className="flex w-full flex-col items-center gap-4 md:flex-row">
+          <div className="flex w-full flex-col gap-4 md:flex-row">
             <Controller
               control={control}
               name="date"
@@ -232,12 +233,12 @@ export const AppointmentForm = () => {
                         <Input
                           id={field.name}
                           aria-invalid={fieldState.invalid}
-                          placeholder="Selecione a data do atendimento"
+                          placeholder="dd/mm/aaaa"
                           className="cursor-pointer pl-10"
                           value={
                             field.value
                               ? dayjs(field.value).format("DD/MM/YYYY")
-                              : "Escolha a data"
+                              : ""
                           }
                           readOnly
                         />
@@ -287,30 +288,35 @@ export const AppointmentForm = () => {
               name="time"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={field.name}>Horário</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>Hora</FieldLabel>
 
-                  <Select>
-                    <SelectTrigger>
-                      <div className="relative">
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value)}
+                  >
+                    <SelectTrigger aria-invalid={fieldState.invalid}>
+                      <div className="flex items-center gap-2">
                         <ClockCircle
                           weight="Bold"
-                          className="-translate-y-1/2 pointer-events-none absolute top-1/2 left-3 size-5 text-content-brand"
+                          className="pointer-events-none size-5 text-content-brand"
                         />
 
-                        <span className="cursor-pointer pl-10">
-                          {field.value ? field.value : "Escolha a hora"}
-                        </span>
+                        {field.value ? (
+                          <span className="text-base text-content-primary">
+                            {field.value}
+                          </span>
+                        ) : (
+                          <span className="text-base text-content-secondary">
+                            hh:mm
+                          </span>
+                        )}
                       </div>
                     </SelectTrigger>
 
                     <SelectContent className="w-auto p-0" position="popper">
                       <SelectGroup>
                         {TIME_OPTIONS.map((time) => (
-                          <SelectItem
-                            key={time}
-                            value={time}
-                            onSelect={() => field.onChange(time)}
-                          >
+                          <SelectItem key={time} value={time}>
                             {time}
                           </SelectItem>
                         ))}

@@ -16,6 +16,8 @@ const appointmentFormSchema = z
   })
   .refine(
     (data) => {
+      if (!data.date || !data.time) return true
+
       const [hours, minutes] = data.time.split(":").map(Number)
 
       const selectedDateTime = dayjs(data.date).hour(hours).minute(minutes)
