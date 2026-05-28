@@ -10,6 +10,7 @@ import {
   Phone,
   User,
 } from "@solar-icons/react/ssr"
+import { Loader2Icon } from "lucide-react"
 import dayjs from "dayjs"
 import { ptBR } from "date-fns/locale"
 
@@ -37,7 +38,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectValue,
 } from "@/shared/components/ui/select"
 
 import { type AppointmentFormData, appointmentFormSchema } from "./schema"
@@ -59,7 +59,12 @@ const generateTimeOptions = () => {
 const TIME_OPTIONS = generateTimeOptions()
 
 export const AppointmentForm = () => {
-  const { handleSubmit, control, reset } = useForm({
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { isSubmitting },
+  } = useForm({
     resolver: zodResolver(appointmentFormSchema),
     defaultValues: {
       tutorName: "",
@@ -71,8 +76,12 @@ export const AppointmentForm = () => {
     },
   })
 
-  const onSubmit = (data: AppointmentFormData) => {
+  const onSubmit = async (data: AppointmentFormData) => {
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 5000))
+
     console.log(data)
+
     reset()
   }
 
@@ -338,7 +347,9 @@ export const AppointmentForm = () => {
           type="submit"
           variant="brand"
           className="ml-auto w-fit uppercase"
+          disabled={isSubmitting}
         >
+          {isSubmitting && <Loader2Icon className="size-5 animate-spin" />}
           Agendar
         </Button>
       </DialogContent>
