@@ -13,6 +13,7 @@ import {
 import { Loader2Icon } from "lucide-react"
 import dayjs from "dayjs"
 import { ptBR } from "date-fns/locale"
+import { toast } from "sonner"
 
 import { Button } from "@/shared/components/ui/button"
 import {
@@ -77,10 +78,14 @@ export const AppointmentForm = () => {
   })
 
   const onSubmit = async (data: AppointmentFormData) => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 5000))
+    const [hours, minutes] = data.time.split(":").map(Number)
 
-    console.log(data)
+    const scheduleAt = dayjs(data.date).hour(hours).minute(minutes).toDate()
+
+    toast.success("Agendamento realizado com sucesso!")
+
+    // TODO: Chamar a Server Action para salvar o agendamento no banco de dados
+    console.log({ ...data, scheduleAt })
 
     reset()
   }

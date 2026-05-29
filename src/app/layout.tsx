@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Inter, Inter_Tight } from "next/font/google"
+import { Toaster } from "sonner"
 
 import dayjs from "dayjs"
 import "dayjs/locale/pt-br"
@@ -39,7 +40,11 @@ export default function RootLayout({
       lang="pt-BR"
       className={cn(inter.variable, interTight.variable, "antialiased")}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        {children}
+
+        <Toaster position="top-right" theme="dark" richColors />
+      </body>
     </html>
   )
 }
