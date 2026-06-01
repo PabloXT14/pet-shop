@@ -41,6 +41,8 @@ import {
   SelectItem,
 } from "@/shared/components/ui/select"
 
+import { createAppointmentAction } from "@/shared/actions/create-appointment-action"
+
 import { type AppointmentFormData, appointmentFormSchema } from "./schema"
 
 const generateTimeOptions = () => {
@@ -82,10 +84,15 @@ export const AppointmentForm = () => {
 
     const scheduleAt = dayjs(data.date).hour(hours).minute(minutes).toDate()
 
-    toast.success("Agendamento realizado com sucesso!")
+    await createAppointmentAction({
+      tutorName: data.tutorName,
+      petName: data.petName,
+      phone: data.phone,
+      description: data.description,
+      scheduleAt,
+    })
 
-    // TODO: Chamar a Server Action para salvar o agendamento no banco de dados
-    console.log({ ...data, scheduleAt })
+    toast.success("Agendamento realizado com sucesso!")
 
     reset()
   }
