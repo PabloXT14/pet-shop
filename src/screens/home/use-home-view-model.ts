@@ -1,18 +1,18 @@
+"use server"
+
 import type {
   Appointment,
   AppointmentPeriodGroup,
 } from "@/shared/types/appointment"
 import type { Appointment as PrismaAppointment } from "@/generated/prisma/client"
 
-import { APPOINTMENTS } from "@/shared/data/appointments"
-
 import { getAppointmentsService } from "@/shared/services/appointment-service"
 
-export const useHomeViewModel = () => {
+export const useHomeViewModel = async () => {
   const fetchAppointments = async () => {
     const { appointments } = await getAppointmentsService()
 
-    console.log("Appointments from prisma:", appointments)
+    return appointments
   }
 
   const getPeriod = (hour: number) => {
@@ -67,9 +67,9 @@ export const useHomeViewModel = () => {
     ] as AppointmentPeriodGroup[]
   }
 
-  fetchAppointments()
+  const appointments = await fetchAppointments()
 
   return {
-    groupedAppointments: groupAppointmentsByPeriod(APPOINTMENTS),
+    groupedAppointments: groupAppointmentsByPeriod(appointments),
   }
 }

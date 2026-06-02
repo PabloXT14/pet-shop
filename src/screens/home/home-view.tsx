@@ -2,11 +2,11 @@ import { Header } from "./components/header"
 import { PeriodSection } from "./components/period-section"
 import { AppointmentForm } from "./components/appointment-form"
 
-import type { useHomeViewModel } from "./use-home-view-model"
+import { useHomeViewModel } from "./use-home-view-model"
 
-type HomeViewProps = ReturnType<typeof useHomeViewModel>
+export const HomeView = async () => {
+  const { groupedAppointments } = await useHomeViewModel()
 
-export const HomeView = ({ groupedAppointments }: HomeViewProps) => {
   return (
     <div className="min-h-screen bg-background-primary">
       {/* CONTENT */}

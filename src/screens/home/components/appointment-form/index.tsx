@@ -84,13 +84,17 @@ export const AppointmentForm = () => {
 
     const scheduleAt = dayjs(data.date).hour(hours).minute(minutes).toDate()
 
-    await createAppointmentAction({
+    const result = await createAppointmentAction({
       tutorName: data.tutorName,
       petName: data.petName,
       phone: data.phone,
       description: data.description,
       scheduleAt,
     })
+
+    if (result?.error) {
+      return toast.error(result.error)
+    }
 
     toast.success("Agendamento realizado com sucesso!")
 
