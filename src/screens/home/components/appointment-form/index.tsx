@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -62,6 +63,8 @@ const generateTimeOptions = () => {
 const TIME_OPTIONS = generateTimeOptions()
 
 export const AppointmentForm = () => {
+  const [isOpen, setIsOpen] = useState(false)
+
   const {
     handleSubmit,
     control,
@@ -99,10 +102,11 @@ export const AppointmentForm = () => {
     toast.success("Agendamento realizado com sucesso!")
 
     reset()
+    setIsOpen(false)
   }
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <DialogTrigger asChild>
         <Button variant="brand" type="button" className="uppercase">
           Novo agendamento

@@ -3,6 +3,7 @@
 import z from "zod"
 
 import { prisma } from "../lib/prisma"
+import { revalidatePath } from "next/cache"
 
 const createAppointmentSchema = z.object({
   tutorName: z.string().min(3, "O nome do tutor é obrigatório"),
@@ -50,7 +51,7 @@ export const createAppointmentAction = async (data: CreateAppointmentData) => {
       },
     })
 
-    return { success: true }
+    revalidatePath("/") // Revalida a página inicial para mostrar o novo agendamento
   } catch (error) {
     console.error("Error creating appointment:", error)
   }
