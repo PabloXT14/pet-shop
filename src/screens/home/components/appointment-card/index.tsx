@@ -1,6 +1,11 @@
+"use client"
+
 import dayjs from "dayjs"
 
 import type { Appointment } from "@/shared/types/appointment"
+import { AppointmentForm } from "../appointment-form"
+import { Button } from "@/shared/components/ui/button"
+import { Pen as PenIcon } from "@solar-icons/react/ssr"
 
 type AppointmentCardProps = {
   appointment: Appointment
@@ -35,12 +40,13 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
         </div>
 
         {/* ACTIONS */}
-        <button
-          type="button"
-          className="self-end text-content-tertiary text-paragraph-small md:self-auto"
-        >
-          Remover agendamento
-        </button>
+        <div className="flex items-center gap-2 self-end md:self-auto">
+          <AppointmentForm appointment={appointment}>
+            <Button variant="edit" size="icon" title="Editar agendamento">
+              <PenIcon weight="Bold" size={16} />
+            </Button>
+          </AppointmentForm>
+        </div>
       </div>
     </div>
   )

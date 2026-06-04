@@ -1,5 +1,7 @@
 "use server"
 
+import dayjs from "dayjs"
+
 import type {
   Appointment,
   AppointmentPeriodGroup,
@@ -27,10 +29,7 @@ export const useHomeViewModel = async () => {
     const transformedAppointments: Appointment[] = appointments.map(
       (appointment) => ({
         ...appointment,
-        time: appointment.scheduleAt.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
+        time: dayjs(appointment.scheduleAt).format("HH:mm"),
         period: getPeriod(appointment.scheduleAt.getHours()),
       }),
     )

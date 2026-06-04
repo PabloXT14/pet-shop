@@ -3,7 +3,7 @@ import { tv, type VariantProps } from "tailwind-variants"
 import { Slot } from "radix-ui"
 
 const buttonVariants = tv({
-  base: "group/button cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring",
+  base: "group/button cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 shrink-0 outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring",
   variants: {
     variant: {
       default: "bg-primary text-primary-foreground hover:bg-primary/80",
@@ -19,14 +19,14 @@ const buttonVariants = tv({
         "bg-red-600 text-white hover:bg-red-700 transition-colors font-medium",
       link: "text-primary underline-offset-4 hover:underline",
       remove:
-        "inline-flex items-center gap-2 rounded-md border border-red-500/50 px-3 py-1 text-sm text-red-500 transition-all hover:bg-red-500 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-      edit: "inline-flex items-center gap-2 rounded-md border border-blue-500/50 px-3 py-1 text-sm text-blue-500 transition-all hover:bg-blue-500 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "inline-flex items-center gap-2 rounded-md border border-content-tertiary text-sm text-content-tertiary transition-all hover:bg-destructive hover:border-destructive hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+      edit: "inline-flex items-center gap-2 rounded-md border border-content-tertiary text-sm text-content-tertiary transition-all hover:bg-accent-blue hover:border-accent-blue hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-background",
     },
     size: {
       default: "h-12 px-6 py-3 has-[>svg]:px-3",
       sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
       lg: "h-12 rounded-md px-6 has-[>svg]:px-4",
-      icon: "size-9",
+      icon: "size-8",
     },
   },
   defaultVariants: {

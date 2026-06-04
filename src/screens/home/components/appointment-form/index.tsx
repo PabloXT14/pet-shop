@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -45,6 +45,7 @@ import {
 import { createAppointmentAction } from "@/shared/actions/create-appointment-action"
 
 import { type AppointmentFormData, appointmentFormSchema } from "./schema"
+import type { Appointment } from "@/shared/types/appointment"
 
 const generateTimeOptions = () => {
   const times = []
@@ -62,7 +63,15 @@ const generateTimeOptions = () => {
 
 const TIME_OPTIONS = generateTimeOptions()
 
-export const AppointmentForm = () => {
+type AppointmentFormProps = {
+  children?: React.ReactNode
+  appointment?: Appointment
+}
+
+export const AppointmentForm = ({
+  children,
+  appointment,
+}: AppointmentFormProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const {
@@ -105,12 +114,21 @@ export const AppointmentForm = () => {
     setIsOpen(false)
   }
 
+  useEffect(() => {
+    reset({
+      ...appointment,
+      date: appointment ? appointment.scheduleAt : undefined,
+    })
+  }, [appointment, reset])
+
   return (
     <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <DialogTrigger asChild>
-        <Button variant="brand" type="button" className="uppercase">
-          Novo agendamento
-        </Button>
+        {children || (
+          <Button variant="brand" type="button" className="uppercase">
+            Novo agendamento
+          </Button>
+        )}
       </DialogTrigger>
 
       <DialogContent
