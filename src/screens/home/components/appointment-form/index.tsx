@@ -43,6 +43,7 @@ import {
 } from "@/shared/components/ui/select"
 
 import { createAppointmentAction } from "@/shared/actions/create-appointment-action"
+import { updateAppointmentAction } from "@/shared/actions/update-appointment-action"
 
 import { type AppointmentFormData, appointmentFormSchema } from "./schema"
 import type { Appointment } from "@/shared/types/appointment"
@@ -91,24 +92,41 @@ export const AppointmentForm = ({
     },
   })
 
+  const onOpenChange = (open: boolean) => {
+    setIsOpen(open)
+
+    if (!open) {
+      reset()
+    }
+  }
+
   const onSubmit = async (data: AppointmentFormData) => {
     const [hours, minutes] = data.time.split(":").map(Number)
 
     const scheduleAt = dayjs(data.date).hour(hours).minute(minutes).toDate()
 
-    const result = await createAppointmentAction({
-      tutorName: data.tutorName,
-      petName: data.petName,
-      phone: data.phone,
-      description: data.description,
-      scheduleAt,
-    })
+    const isEditing = !!appointment?.id
+
+    const result = isEditing
+      ? await updateAppointmentAction({
+          id: appointment.id,
+          data: {
+            ...data,
+            scheduleAt,
+          },
+        })
+      : await createAppointmentAction({
+          ...data,
+          scheduleAt,
+        })
 
     if (result?.error) {
       return toast.error(result.error)
     }
 
-    toast.success("Agendamento realizado com sucesso!")
+    toast.success(
+      `Agendamento ${isEditing ? "atualizado" : "criado"} com sucesso!`,
+    )
 
     reset()
     setIsOpen(false)
@@ -122,7 +140,7 @@ export const AppointmentForm = ({
   }, [appointment, reset])
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         {children || (
           <Button variant="brand" type="button" className="uppercase">

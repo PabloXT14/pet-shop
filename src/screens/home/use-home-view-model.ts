@@ -12,9 +12,13 @@ import { getAppointmentsService } from "@/shared/services/appointment-service"
 
 export const useHomeViewModel = async () => {
   const fetchAppointments = async () => {
-    const { appointments } = await getAppointmentsService()
-
-    return appointments
+    try {
+      const { appointments } = await getAppointmentsService()
+      return appointments
+    } catch (error) {
+      console.error("Error fetching appointments:", error)
+      return []
+    }
   }
 
   const getPeriod = (hour: number) => {
