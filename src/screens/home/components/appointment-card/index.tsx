@@ -1,17 +1,53 @@
 "use client"
 
+import { useState } from "react"
 import dayjs from "dayjs"
+import { Pen as PenIcon, TrashBin2 } from "@solar-icons/react/ssr"
+import { Loader2Icon } from "lucide-react"
+import { toast } from "sonner"
 
-import type { Appointment } from "@/shared/types/appointment"
 import { AppointmentForm } from "../appointment-form"
 import { Button } from "@/shared/components/ui/button"
-import { Pen as PenIcon } from "@solar-icons/react/ssr"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/shared/components/ui/alert-dialog"
+
+import { deleteAppointmentAction } from "@/shared/actions/delete-appointment-action"
+
+import type { Appointment } from "@/shared/types/appointment"
 
 type AppointmentCardProps = {
   appointment: Appointment
 }
 
 export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  const handleDelete = async () => {
+    setIsDeleting(true)
+
+    const result = await deleteAppointmentAction(appointment.id)
+
+    if (result.success) {
+      toast.success("Agendamento excluído com sucesso")
+    } else {
+      toast.error(
+        result.error ||
+          "Erro ao excluir agendamento. Tente novamente mais tarde.",
+      )
+    }
+
+    setIsDeleting(false)
+  }
+
   return (
     <div className="w-full not-last:border-border-divisor not-last:border-b">
       {/* CONTENT */}
@@ -46,6 +82,40 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
               <PenIcon weight="Bold" size={16} />
             </Button>
           </AppointmentForm>
+
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="remove" size="icon" title="Excluir agendamento">
+                <TrashBin2 weight="Bold" size={16} />
+              </Button>
+            </AlertDialogTrigger>
+
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  Tem certeza que deseja excluir este agendamento?
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  Esta ação não pode ser desfeita. O agendamento será excluído
+                  permanentemente.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction
+                  variant="brand"
+                  onClick={handleDelete}
+                  disabled={isDeleting}
+                >
+                  {isDeleting && (
+                    <Loader2Icon className="size-5 animate-spin" />
+                  )}
+                  Confirmar
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
     </div>

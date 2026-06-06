@@ -10,7 +10,7 @@ const buttonVariants = tv({
       brand:
         "font-family-title font-bold text-base bg-background-brand text-content-inverse rounded-lg hover:bg-background-highlights",
       outline:
-        "border border-border-primary bg-background-tertiary text-content-primary hover:bg-background-secondary hover:border-border-secondary transition-colors",
+        "font-family-title font-bold text-base border border-border-primary bg-background-tertiary text-content-primary hover:bg-background-secondary hover:border-border-secondary transition-colors",
       secondary:
         "bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
       ghost:

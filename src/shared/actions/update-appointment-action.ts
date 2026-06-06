@@ -67,5 +67,9 @@ export const updateAppointmentAction = async (
     revalidatePath("/")
   } catch (error) {
     console.error("Error updating appointment:", error)
+
+    return {
+      error: "Erro ao atualizar agendamento. Tente novamente mais tarde.",
+    }
   }
 }

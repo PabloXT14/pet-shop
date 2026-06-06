@@ -54,5 +54,9 @@ export const createAppointmentAction = async (data: CreateAppointmentData) => {
     revalidatePath("/") // Revalida a página inicial para mostrar o novo agendamento
   } catch (error) {
     console.error("Error creating appointment:", error)
+
+    return {
+      error: "Erro ao criar agendamento. Tente novamente mais tarde.",
+    }
   }
 }
