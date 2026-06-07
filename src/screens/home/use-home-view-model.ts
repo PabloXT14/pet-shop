@@ -8,12 +8,21 @@ import type {
 } from "@/shared/types/appointment"
 import type { Appointment as PrismaAppointment } from "@/generated/prisma/client"
 
-import { getAppointmentsService } from "@/shared/services/appointment-service"
+import { getAppointmentsAction } from "@/shared/actions/get-appointments-actions"
+import { parseISO } from "date-fns"
 
-export const useHomeViewModel = async () => {
+export type UseHomeViewModelProps = {
+  date?: string
+}
+
+export const useHomeViewModel = async ({ date }: UseHomeViewModelProps) => {
+  const selectedDate = date ? parseISO(date) : dayjs().toDate()
+
   const fetchAppointments = async () => {
     try {
-      const { appointments } = await getAppointmentsService()
+      const { appointments } = await getAppointmentsAction({
+        date: selectedDate,
+      })
       return appointments
     } catch (error) {
       console.error("Error fetching appointments:", error)
@@ -71,6 +80,8 @@ export const useHomeViewModel = async () => {
   }
 
   const appointments = await fetchAppointments()
+
+  console.log("DATE: ", date)
 
   return {
     groupedAppointments: groupAppointmentsByPeriod(appointments),

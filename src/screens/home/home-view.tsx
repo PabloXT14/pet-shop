@@ -2,10 +2,15 @@ import { Header } from "./components/header"
 import { PeriodSection } from "./components/period-section"
 import { AppointmentForm } from "./components/appointment-form"
 
-import { useHomeViewModel } from "./use-home-view-model"
+import {
+  useHomeViewModel,
+  type UseHomeViewModelProps,
+} from "./use-home-view-model"
 
-export const HomeView = async () => {
-  const { groupedAppointments } = await useHomeViewModel()
+type HomeViewProps = UseHomeViewModelProps
+
+export const HomeView = async (props: HomeViewProps) => {
+  const { groupedAppointments } = await useHomeViewModel(props)
 
   return (
     <div className="min-h-screen bg-background-primary">
