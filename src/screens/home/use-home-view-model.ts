@@ -81,8 +81,6 @@ export const useHomeViewModel = async ({ date }: UseHomeViewModelProps) => {
 
   const appointments = await fetchAppointments()
 
-  console.log("DATE: ", date)
-
   return {
     groupedAppointments: groupAppointmentsByPeriod(appointments),
   }

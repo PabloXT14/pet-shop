@@ -1,3 +1,5 @@
+import { DatePicker } from "@/shared/components/date-picker"
+
 export const Header = () => {
   return (
     <header className="mb-8 flex w-full flex-col gap-3 md:flex-row md:items-center">
@@ -10,7 +12,8 @@ export const Header = () => {
       </div>
 
       {/* CALENDAR */}
-      <div className="h-12 w-full max-w-[172] rounded-lg bg-background-tertiary"></div>
+      {/* <div className="h-12 w-full max-w-[172] rounded-lg bg-background-tertiary"></div> */}
+      <DatePicker />
     </header>
   )
 }
