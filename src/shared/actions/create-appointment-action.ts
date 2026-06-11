@@ -1,9 +1,10 @@
 "use server"
 
 import z from "zod"
+import { revalidatePath } from "next/cache"
 
 import { prisma } from "../lib/prisma"
-import { revalidatePath } from "next/cache"
+import { calculatePeriod } from "../utils/calculate-period"
 
 const createAppointmentSchema = z.object({
   tutorName: z.string().min(3, "O nome do tutor é obrigatório"),
@@ -23,9 +24,7 @@ export const createAppointmentAction = async (data: CreateAppointmentData) => {
 
     const hour = scheduleAt.getHours()
 
-    const isMorning = hour >= 9 && hour < 12
-    const isAfternoon = hour >= 13 && hour < 18
-    const isEvening = hour >= 19 && hour < 21
+    const { isMorning, isAfternoon, isEvening } = calculatePeriod(hour)
 
     if (!isMorning && !isAfternoon && !isEvening) {
       return {
