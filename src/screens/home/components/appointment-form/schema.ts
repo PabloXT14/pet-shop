@@ -3,16 +3,36 @@ import dayjs from "dayjs"
 
 const appointmentFormSchema = z
   .object({
-    tutorName: z.string().min(3, "O nome do tutor é obrigatório"),
-    petName: z.string().min(3, "O nome do pet é obrigatório"),
-    phone: z.string().min(15, "O telefone é obrigatório"),
-    description: z.string().min(3, "A descrição é obrigatória"),
+    tutorName: z
+      .string({
+        error: "O nome do tutor é obrigatório",
+      })
+      .min(3, "O nome do tutor é obrigatório"),
+    petName: z
+      .string({
+        error: "O nome do pet é obrigatório",
+      })
+      .min(3, "O nome do pet é obrigatório"),
+    phone: z
+      .string({
+        error: "O telefone é obrigatório",
+      })
+      .min(15, "O telefone é obrigatório"),
+    description: z
+      .string({
+        error: "A descrição é obrigatória",
+      })
+      .min(3, "A descrição é obrigatória"),
     date: z
       .date({
         error: "A data é obrigatória",
       })
       .min(dayjs().startOf("day").toDate(), "A data deve ser no futuro"),
-    time: z.string().min(1, "O horário é obrigatório"),
+    time: z
+      .string({
+        error: "O horário é obrigatório",
+      })
+      .min(1, "O horário é obrigatório"),
   })
   .refine(
     (data) => {

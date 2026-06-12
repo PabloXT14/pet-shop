@@ -12,6 +12,7 @@ dayjs.locale("pt-br") // Define o idioma para português do Brasil
 import "@/styles/globals.css"
 
 import { cn } from "@/shared/lib/utils"
+import { AppHeader } from "@/shared/components/app-header"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,6 +29,9 @@ const interTight = Inter_Tight({
 export const metadata: Metadata = {
   title: "Mundo Pet",
   description: "Site de agendamento de consultas veterinárias de um pet shop.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 }
 
 export default function RootLayout({
@@ -41,7 +45,9 @@ export default function RootLayout({
       className={cn(inter.variable, interTight.variable, "antialiased")}
     >
       <body className="flex min-h-full flex-col">
-        {children}
+        <AppHeader />
+
+        <main className="flex flex-1 flex-col">{children}</main>
 
         <Toaster position="top-right" theme="dark" richColors />
       </body>
