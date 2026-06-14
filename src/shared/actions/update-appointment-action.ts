@@ -2,9 +2,11 @@
 
 import z from "zod"
 import { revalidatePath } from "next/cache"
+import dayjs from "dayjs"
 
 import { prisma } from "../lib/prisma"
 import { calculatePeriod } from "../utils/calculate-period"
+import { APP_TIMEZONE } from "../lib/dayjs"
 
 const updateAppointmentSchema = z.object({
   tutorName: z.string().min(3, "O nome do tutor é obrigatório"),
@@ -29,7 +31,7 @@ export const updateAppointmentAction = async (
 
     const { scheduleAt } = parsedData
 
-    const hour = scheduleAt.getHours()
+    const hour = dayjs(scheduleAt).tz(APP_TIMEZONE).hour()
 
     const { isMorning, isAfternoon, isEvening } = calculatePeriod(hour)
 
@@ -41,7 +43,7 @@ export const updateAppointmentAction = async (
 
     const existingAppointment = await prisma.appointment.findFirst({
       where: {
-        scheduleAt: parsedData.scheduleAt,
+        scheduleAt,
         id: {
           not: id,
         },

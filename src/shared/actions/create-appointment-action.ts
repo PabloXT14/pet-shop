@@ -2,6 +2,8 @@
 
 import z from "zod"
 import { revalidatePath } from "next/cache"
+import dayjs from "dayjs"
+import { APP_TIMEZONE } from "../lib/dayjs"
 
 import { prisma } from "../lib/prisma"
 import { calculatePeriod } from "../utils/calculate-period"
@@ -22,8 +24,7 @@ export const createAppointmentAction = async (data: CreateAppointmentData) => {
 
     const { scheduleAt } = parsedData
 
-    const hour = scheduleAt.getHours()
-
+    const hour = dayjs(scheduleAt).tz(APP_TIMEZONE).hour()
     const { isMorning, isAfternoon, isEvening } = calculatePeriod(hour)
 
     if (!isMorning && !isAfternoon && !isEvening) {
@@ -34,7 +35,7 @@ export const createAppointmentAction = async (data: CreateAppointmentData) => {
 
     const existingAppointment = await prisma.appointment.findFirst({
       where: {
-        scheduleAt: parsedData.scheduleAt,
+        scheduleAt,
       },
     })
 
@@ -47,6 +48,7 @@ export const createAppointmentAction = async (data: CreateAppointmentData) => {
     await prisma.appointment.create({
       data: {
         ...parsedData,
+        scheduleAt,
       },
     })
 

@@ -5,9 +5,13 @@ import { Toaster } from "sonner"
 import dayjs from "dayjs"
 import "dayjs/locale/pt-br"
 import customParseFormat from "dayjs/plugin/customParseFormat"
+import utc from "dayjs/plugin/utc"
+import timezone from "dayjs/plugin/timezone"
 
 dayjs.extend(customParseFormat) // Permite que o dayjs reconheça formatos personalizados de data (ex: "DD/MM/YYYY HH:mm")
 dayjs.locale("pt-br") // Define o idioma para português do Brasil
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 import "@/styles/globals.css"
 
