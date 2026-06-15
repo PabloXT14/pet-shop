@@ -3,7 +3,6 @@
 import dayjs from "dayjs"
 
 import { prisma } from "../lib/prisma"
-import { APP_TIMEZONE } from "../lib/dayjs"
 
 type GetAppointmentsParams = {
   date: Date
@@ -30,10 +29,6 @@ export const getAppointmentsAction = async ({
   })
 
   return {
-    // appointments: appointments.map((appointment) => ({
-    //   ...appointment,
-    //   scheduleAt: dayjs(appointment.scheduleAt).tz(APP_TIMEZONE).toDate(), // Converte para Date antes de enviar para o cliente
-    // })),
     appointments,
   }
 }
