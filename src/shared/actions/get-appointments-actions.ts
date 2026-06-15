@@ -30,9 +30,10 @@ export const getAppointmentsAction = async ({
   })
 
   return {
-    appointments: appointments.map((appointment) => ({
-      ...appointment,
-      scheduleAt: dayjs(appointment.scheduleAt).tz(APP_TIMEZONE).toDate(), // Converte para Date antes de enviar para o cliente
-    })),
+    // appointments: appointments.map((appointment) => ({
+    //   ...appointment,
+    //   scheduleAt: dayjs(appointment.scheduleAt).tz(APP_TIMEZONE).toDate(), // Converte para Date antes de enviar para o cliente
+    // })),
+    appointments,
   }
 }
