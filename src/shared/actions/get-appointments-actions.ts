@@ -12,10 +12,10 @@ type GetAppointmentsParams = {
 export const getAppointmentsAction = async ({
   date,
 }: GetAppointmentsParams) => {
-  const dayInTimezone = dayjs(date).tz(APP_TIMEZONE)
+  const day = dayjs(date)
 
-  const start = dayInTimezone.startOf("day").utc().toDate() // 00:00 BRT → UTC
-  const end = dayInTimezone.endOf("day").utc().toDate()
+  const start = day.startOf("day").toDate()
+  const end = day.endOf("day").toDate()
 
   const appointments = await prisma.appointment.findMany({
     where: {

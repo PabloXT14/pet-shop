@@ -1,6 +1,7 @@
 "use server"
 
 import dayjs from "dayjs"
+import { parseISO } from "date-fns"
 
 import type {
   Appointment,
@@ -9,7 +10,7 @@ import type {
 import type { Appointment as PrismaAppointment } from "@/generated/prisma/client"
 
 import { getAppointmentsAction } from "@/shared/actions/get-appointments-actions"
-import { parseISO } from "date-fns"
+import { APP_TIMEZONE } from "@/shared/lib/dayjs"
 
 export type UseHomeViewModelProps = {
   date?: string
@@ -42,8 +43,10 @@ export const useHomeViewModel = async ({ date }: UseHomeViewModelProps) => {
     const transformedAppointments: Appointment[] = appointments.map(
       (appointment) => ({
         ...appointment,
-        time: dayjs(appointment.scheduleAt).format("HH:mm"),
-        period: getPeriod(appointment.scheduleAt.getHours()),
+        time: dayjs(appointment.scheduleAt).tz(APP_TIMEZONE).format("HH:mm"),
+        period: getPeriod(
+          dayjs(appointment.scheduleAt).tz(APP_TIMEZONE).hour(),
+        ),
       }),
     )
 

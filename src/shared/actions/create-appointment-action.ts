@@ -3,10 +3,10 @@
 import z from "zod"
 import { revalidatePath } from "next/cache"
 import dayjs from "dayjs"
-import { APP_TIMEZONE } from "../lib/dayjs"
 
 import { prisma } from "../lib/prisma"
 import { calculatePeriod } from "../utils/calculate-period"
+import { APP_TIMEZONE } from "../lib/dayjs"
 
 const createAppointmentSchema = z.object({
   tutorName: z.string().min(3, "O nome do tutor é obrigatório"),
